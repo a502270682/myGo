@@ -29,15 +29,29 @@ const TraceLevel = logrus.TraceLevel
 
 var logger = myLogger()
 
-func myLogger() *Logger {
-	return &CtxLogger{
+func myLogger() Logger {
+	formatter := &logrus.JSONFormatter{}
+	nl := logrus.Logger{
 		Out:          os.Stderr,
-		Formatter:    &logrus.JSONFormatter{},
+		Formatter:    formatter,
 		Hooks:        make(LevelHooks),
 		Level:        InfoLevel,
 		ExitFunc:     os.Exit,
 		ReportCaller: false,
 	}
+	sl := logrus.Logger{
+		Out:          os.Stderr,
+		Formatter:    formatter,
+		Hooks:        make(LevelHooks),
+		Level:        InfoLevel,
+		ExitFunc:     os.Exit,
+		ReportCaller: false,
+	}
+	return &CtxLogger{&nl, &sl}
+}
+
+func GetLogger() Logger {
+	return logger
 }
 
 func SetOutput(out io.Writer) {

@@ -51,8 +51,8 @@ type MyLogger interface {
 }
 
 type CtxLogger struct {
-	n *logrus.Logger // normal logger
-	s *logrus.Logger // shadow logger
+	n *logrus.Logger // normal log
+	s *logrus.Logger // shadow log
 }
 
 func (cl *CtxLogger) newMyGoLogEntry() MyLoggerEntry {

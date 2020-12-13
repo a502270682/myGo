@@ -14,12 +14,12 @@ type MyGoLogEntry struct {
 	sl *logrus.Logger
 }
 
-// logger 以及 entry的公用接口，方法一致，业务使用体验一致
+// log 以及 entry的公用接口，方法一致，业务使用体验一致
 type MyLoggerEntry interface {
 	WithField(key string, value interface{}) MyLoggerEntry
 	WithFields(fields Fields) MyLoggerEntry
-	//WithError(err error) MyLoggerEntry
-	//WithTime(t time.Time) MyLoggerEntry
+	WithError(err error) MyLoggerEntry
+	WithTime(t time.Time) MyLoggerEntry
 	WithObject(obj interface{}) MyLoggerEntry
 	Tracef(ctx context.Context, format string, args ...interface{})
 	Debugf(ctx context.Context, format string, args ...interface{})
