@@ -9,6 +9,23 @@ type Config struct {
 	Env      string `mapstructure:"env"`
 	AppName  string `mapstructure:"app_name"`
 	HttpPort string `mapstructure:"http_port"`
+	Mysql    Mysql  `mapstructure:"mysql"`
+}
+
+type Mysql struct {
+	Master ConnectionConfig `mapstructure:"master"`
+	Slave  ConnectionConfig `mapstructure:"slave"`
+}
+
+type ConnectionConfig struct {
+	User     string `mapstructure:"user"`
+	Password string `mapstructure:"password"`
+	Host     string `mapstructure:"host"`
+	Port     int    `mapstructure:"port"`
+	Db       string `mapstructure:"db"`
+	MaxIdle  int    `mapstructure:"max_idle"`
+	MaxOpen  int    `mapstructure:"max_open"`
+	Debug    bool   `mapstructure:"debug"`
 }
 
 var gConfig Config

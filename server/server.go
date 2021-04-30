@@ -6,6 +6,7 @@ import (
 	"github.com/pkg/errors"
 	"github.com/urfave/cli"
 	"myGo/adapter/log"
+	"myGo/adapter/mysql"
 	"myGo/config"
 )
 
@@ -20,6 +21,16 @@ func initWithConfig(ctx context.Context, filePath string) (*config.Config, error
 		return nil, err
 	}
 	return conf, nil
+}
+
+func initMysql(conf *config.Config) error {
+	err := mysql.InitializeMainDb(conf.Mysql.Master)
+	if err != nil {
+		return err
+	}
+	db := mysql.GetClient()
+	mysql.InitEntityDao(db)
+	return nil
 }
 
 func NewServer(ctx context.Context) *Server {
@@ -38,6 +49,10 @@ func NewServer(ctx context.Context) *Server {
 		}
 		log.Infof(ctx, "init config success. conf:%+v", conf)
 		s.config = conf
+		err = initMysql(conf)
+		if err != nil {
+			return errors.Wrap(err, "fail to init mysql")
+		}
 		r := gin.Default()
 		routes(r)
 		if err = r.Run(s.config.HttpPort); err != nil {
