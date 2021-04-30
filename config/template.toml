@@ -4,3 +4,15 @@ env = "testing"
 app_name = "my_go"
 
 http_port = ":8080"
+
+[mysql]
+    [mysql.master]
+    user = "root"
+    password = ""
+    host = "127.0.0.1"
+    port = 3306
+    db = "test"
+    max_idle = 100
+    max_open = 200
+    name = ""
+    debug = true
