@@ -9,7 +9,7 @@ http_port = ":8080"
     [mysql.master]
     user = "root"
     password = ""
-    host = "127.0.0.1"
+    host = "host.docker.internal" # docker访问本地机
     port = 3306
     db = "test"
     max_idle = 100
