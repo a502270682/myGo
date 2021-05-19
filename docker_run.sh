@@ -1,0 +1,1 @@
+docker run -d -p 8080:8080 -v /Users/guofeiyang/gfy/config:/etc/config --name mygo mygo:v3

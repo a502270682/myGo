@@ -11,7 +11,7 @@ FROM  golang:latest
 
 WORKDIR /root
 COPY /myGo /
-COPY /config/template.toml /etc/config/template.toml
+COPY /config/mygo.toml /etc/config/mygo.toml
 
 EXPOSE 8080
-CMD ["/myGo", "-c", "/etc/config/template.toml"]
+CMD ["/myGo", "-c", "/etc/config/mygo.toml"]
