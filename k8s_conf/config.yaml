@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: default
+  name: mygo-conf
+data:
+  mygo-conf: |-
+    #环境
+    env = "testing"
+
+    app_name = "my_go"
+
+    http_port = ":8080"
+
+    [mysql]
+        [mysql.master]
+        user = "root"
+        password = "123456"
+        host = "192.168.50.196" # docker访问本地机
+        port = 3306
+        db = "test"
+        max_idle = 100
+        max_open = 200
+        name = ""
+        debug = true
