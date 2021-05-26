@@ -2,9 +2,10 @@ package log
 
 import (
 	"context"
-	"github.com/sirupsen/logrus"
 	"io"
 	"time"
+
+	"github.com/sirupsen/logrus"
 )
 
 // XdLogger的接口

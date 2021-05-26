@@ -55,7 +55,7 @@ func NewServer(ctx context.Context) *Server {
 		}
 		r := gin.Default()
 		routes(r)
-		if err = r.Run(s.config.HttpPort); err != nil {
+		if err = r.Run(s.config.HTTPPort); err != nil {
 			return errors.Wrap(err, "fail to run")
 		}
 

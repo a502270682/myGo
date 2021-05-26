@@ -2,16 +2,17 @@ package route
 
 import (
 	"context"
-	"github.com/fatih/structs"
-	"github.com/gin-gonic/gin"
-	"github.com/gin-gonic/gin/binding"
-	"github.com/globalsign/mgo/bson"
-	"github.com/pkg/errors"
 	"myGo/adapter/error_code"
 	"myGo/adapter/log"
 	"net/http"
 	"net/url"
 	"reflect"
+
+	"github.com/fatih/structs"
+	"github.com/gin-gonic/gin"
+	"github.com/gin-gonic/gin/binding"
+	"github.com/globalsign/mgo/bson"
+	"github.com/pkg/errors"
 )
 
 const defaultMemory = 32 * 1024 * 1024
@@ -170,7 +171,7 @@ func CreateHandlerFuncWithLogger(method interface{}, l log.Logger) gin.HandlerFu
 		}
 		log.WithField("form", c.Request.Form).Debug(ctx, "request param")
 		if err := c.ShouldBindWith(req.Interface(), binding.Form); err != nil {
-			replyError := error_code.Error(error_code.CODE_PARAM_WRONG, err.Error())
+			replyError := error_code.Error(error_code.CodeParamWrong, err.Error())
 			c.JSON(http.StatusOK, replyError)
 			l.WithFields(log.Fields{
 				"req": c.Request.URL,

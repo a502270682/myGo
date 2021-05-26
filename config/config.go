@@ -8,7 +8,7 @@ import (
 type Config struct {
 	Env      string `mapstructure:"env"`
 	AppName  string `mapstructure:"app_name"`
-	HttpPort string `mapstructure:"http_port"`
+	HTTPPort string `mapstructure:"http_port"`
 	Mysql    Mysql  `mapstructure:"mysql"`
 }
 

@@ -37,7 +37,10 @@ func main() {
 			panic("Http Request Failed " + err.Error())
 		}
 		defer resp.Body.Close()
-		ioutil.ReadAll(resp.Body)
+		_, err = ioutil.ReadAll(resp.Body)
+		if err != nil {
+			panic("readAll failed" + err.Error())
+		}
 	}
 	fmt.Println("Orig GoNet Short Link", time.Since(start))
 
@@ -55,7 +58,10 @@ func main() {
 			panic("Http Request Failed " + err.Error())
 		}
 		defer resp.Body.Close()
-		ioutil.ReadAll(resp.Body) // 如果不及时从请求中获取结果，此连接会占用，其他请求服务复用连接
+		_, err = ioutil.ReadAll(resp.Body) // 如果不及时从请求中获取结果，此连接会占用，其他请求服务复用连接
+		if err != nil {
+			panic("readAll failed" + err.Error())
+		}
 	}
 	fmt.Println("Orig GoNet Long Link", time.Since(start2))
 }
