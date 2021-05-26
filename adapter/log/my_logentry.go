@@ -2,9 +2,10 @@ package log
 
 import (
 	"context"
-	"github.com/sirupsen/logrus"
 	"reflect"
 	"time"
+
+	"github.com/sirupsen/logrus"
 )
 
 // 实现接口 MyLoggerEntry

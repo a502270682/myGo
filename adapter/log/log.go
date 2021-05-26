@@ -2,10 +2,11 @@ package log
 
 import (
 	"context"
-	"github.com/sirupsen/logrus"
 	"io"
 	"os"
 	"time"
+
+	"github.com/sirupsen/logrus"
 )
 
 type Entry = logrus.Entry

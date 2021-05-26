@@ -3,11 +3,13 @@ package mysql
 import (
 	"flag"
 	"fmt"
-	"github.com/jinzhu/gorm"
-	"github.com/pkg/errors"
 	"myGo/config"
 	"myGo/models"
 	"time"
+
+	"github.com/jinzhu/gorm"
+	"github.com/pkg/errors"
+
 	// 引入数据库驱动注册及初始化
 	_ "github.com/go-sql-driver/mysql"
 )

@@ -1,9 +1,10 @@
-package auto_init
+package autoinit
 
 import (
 	"context"
-	"github.com/jinzhu/gorm"
 	"myGo/adapter/log"
+
+	"github.com/jinzhu/gorm"
 )
 
 var injectors []func(db *gorm.DB)

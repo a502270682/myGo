@@ -12,7 +12,7 @@ func UserInfoHandler(ctx context.Context, req *proto.UserInfoReq, rsp *proto.Use
 	user, err := models.GetUserDao().GetUser(req.Name)
 	if err != nil {
 		log.Errorf(ctx, "fail to call GetUser, err:%+v", err)
-		return error_code.Error(error_code.CODE_PARAM_WRONG, "")
+		return error_code.Error(error_code.CodeParamWrong, "")
 	}
 	rsp.UserName = user.Name
 	rsp.UserAge = user.Age
