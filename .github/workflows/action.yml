@@ -39,12 +39,12 @@ jobs:
           skip-build-cache: true
           skip-pkg-cache: true
 
-  build:
-    runs-on: ubuntu-latest
+#   build:
+#     runs-on: ubuntu-latest
 
-    steps:
-    - name: Build
-      run: go build -v ./...
+#     steps:
+#     - name: Build
+#       run: go build -v ./...
 
-    - name: Test
-      run: go test -v ./...
+#     - name: Test
+#       run: go test -v ./...
