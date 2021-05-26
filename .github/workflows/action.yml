@@ -27,14 +27,14 @@ jobs:
           go mod download
           git diff --exit-code go.mod
 
-  golangci-lint:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: lint
-        uses: golangci/golangci-lint-action@v2.5.2
-        with:
-          version: latest
+#   golangci-lint:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: actions/checkout@v2
+#       - name: lint
+#         uses: golangci/golangci-lint-action@v2.5.2
+#         with:
+#           version: latest
           # skip cache because of flaky behaviors
           #skip-build-cache: true
           #skip-pkg-cache: true
