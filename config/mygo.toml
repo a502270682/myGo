@@ -3,7 +3,7 @@ env = "testing"
 
 app_name = "my_go"
 
-http_port = ":8080"
+http_port = ":8081"
 
 [mysql]
     [mysql.master]
