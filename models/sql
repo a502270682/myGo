@@ -23,6 +23,10 @@ INSERT INTO school ( name )
                        VALUES
                        ( '绵阳中学' );
 
+INSERT INTO school ( name )
+                       VALUES
+                       ( '南山中学' );
+
 INSERT INTO user ( name, age, school_id )
                        VALUES
                        ( 'gfy', 19, 1 );
