@@ -20,3 +20,13 @@ type UserInfoRsp struct {
 	UserName string `json:"user_name"`
 	UserAge  int    `json:"user_age"`
 }
+
+type SchoolListReq struct {
+	Names string `form:"names"`
+}
+
+type SchoolListRsp struct {
+}
+
+type SchoolInfo struct {
+}

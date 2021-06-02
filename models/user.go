@@ -26,8 +26,9 @@ func GetUserDao() *UserDao {
 
 type User struct {
 	*gorm.Model
-	Name string
-	Age  int
+	Name     string `gorm:"column:name"`
+	Age      int    `gorm:"column:age"`
+	SchoolId uint   `gorm:"column:school_id"`
 }
 
 func (u *User) TableName() string {
@@ -65,4 +66,20 @@ func (d *UserDao) UpdateMany() error {
 	}
 	fmt.Println(newUsers[0])
 	return nil
+}
+
+type Result struct {
+	UserName   string `json:"user_name"`
+	SchoolName string `json:"school_name"`
+	Age        int    `json:"age"`
+	SchoolId   uint   `json:"school_id"`
+}
+
+func (d *UserDao) GetUserWithSchool(name string) []*Result {
+	// .Select("user.name as username, school.name as schoolname")
+	var ret []*Result
+	if err := d.DB.Table("user").Where("user.name = (?)", name).Select("user.name as user_name, school.name as school_name, user.age as age, user.school_id as school_id").Joins("left join school on user.school_id = school.id").Find(&ret).Error; err != nil {
+		panic(err)
+	}
+	return ret
 }

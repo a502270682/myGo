@@ -21,6 +21,7 @@ var (
 
 func InitEntityDao(d *gorm.DB) {
 	models.InitUserDao(d)
+	models.InitSchoolDao(d)
 }
 
 func makeDsn(user, password, host, db string, port int) string {
