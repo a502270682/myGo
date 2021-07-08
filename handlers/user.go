@@ -19,8 +19,12 @@ func UserInfoHandler(ctx context.Context, req *proto.UserInfoReq, rsp *proto.Use
 	for _, t := range result {
 		fmt.Println(t)
 	}
-	schools, _ := models.GetSchoolDao().GetSchoolsByNames([]string{"绵阳中学", "南山中学"})
-	for _, t := range schools {
+	//schools, _ := models.GetSchoolDao().GetSchoolsByNames([]string{"绵阳中学", "南山中学"})
+	//for _, t := range schools {
+	//	fmt.Println(t)
+	//}
+	s, _ := models.GetSchoolDao().GetSchoolsByType([]models.SchoolType{models.SchoolTypeJSchool})
+	for _, t := range s {
 		fmt.Println(t)
 	}
 	rsp.UserName = user.Name
