@@ -50,3 +50,7 @@ func (s *SchoolDao) GetSchoolsByType(types []SchoolType) ([]*School, error) {
 	}
 	return ret, nil
 }
+
+func (s *SchoolDao) Save(school School) error {
+	return s.DB.Save(school).Error
+}
