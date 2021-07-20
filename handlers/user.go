@@ -25,6 +25,8 @@ func UserInfoHandler(ctx context.Context, req *proto.UserInfoReq, rsp *proto.Use
 	//}
 	s, _ := models.GetSchoolDao().GetSchoolsByType([]models.SchoolType{models.SchoolTypeJSchool})
 	for _, t := range s {
+		//t.SchoolType = models.SchoolTypeHighSchool
+		//err = models.GetSchoolDao().Save(*t)
 		fmt.Println(t)
 	}
 	rsp.UserName = user.Name
