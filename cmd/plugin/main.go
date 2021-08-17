@@ -14,9 +14,6 @@ import (
 func main() {
 	rand.Seed(time.Now().UnixNano())
 	ctx := context.Background()
-	//if err := server.NewServer(ctx).Run(os.Args); err != nil {
-	//	log.Errorf(ctx, "server run with error: %v", err)
-	//}
 	cron.StartCron()
 	signals := make(chan os.Signal, 1)
 	defer close(signals)
