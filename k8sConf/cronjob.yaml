@@ -1,0 +1,16 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: crontest
+spec:
+  schedule: "*/1 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: crontest
+              image: crontest:v1
+              imagePullPolicy: IfNotPresent
+              command: ["/crontest"]
+          restartPolicy: OnFailure

@@ -1,0 +1,1 @@
+docker build -t crontest:v1 .
