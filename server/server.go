@@ -7,6 +7,7 @@ import (
 	"github.com/urfave/cli"
 	"myGo/adapter/log"
 	"myGo/adapter/mysql"
+	"myGo/adapter/redis"
 	"myGo/config"
 )
 
@@ -42,6 +43,7 @@ func NewServer(ctx context.Context) *Server {
 		if c.GlobalString("c") == "" {
 			return errors.New("usage: my_go -c configfilepath")
 		}
+
 		log.Info(ctx, "start read config: ", c.GlobalString("c"))
 		conf, err := initWithConfig(ctx, c.GlobalString("c"))
 		if err != nil {
@@ -49,10 +51,19 @@ func NewServer(ctx context.Context) *Server {
 		}
 		log.Infof(ctx, "init config success. conf:%+v", conf)
 		s.config = conf
+
+		// mysql
 		err = initMysql(conf)
 		if err != nil {
 			return errors.Wrap(err, "fail to init mysql")
 		}
+
+		// redis init
+		err = redis.Initialize(conf.Redis.Default)
+		if err != nil {
+			return err
+		}
+
 		r := gin.Default()
 		routes(r)
 		if err = r.Run(s.config.HTTPPort); err != nil {
