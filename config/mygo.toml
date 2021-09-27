@@ -16,3 +16,14 @@ http_port = ":8081"
     max_open = 200
     name = ""
     debug = true
+
+[redis]
+    [redis.default]
+    name = "default"
+    addr = "redis.staging.svc.cluster.local:6379" #staging-staging-shared-001.sownv4.0001.apse1.cache.amazonaws.com
+    db = 0
+    maxRetries = 3
+    dialTimeout = 5
+    readTimeout = 2
+    writeTimeout = 2
+    poolSize = 10
