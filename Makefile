@@ -22,4 +22,4 @@ dep: ## Get the dependencies
 build: dep ## Build the binary file
 	@echo "make build"
 	@chmod 755 ./build.sh
-	./build.sh
+	./build.sh ./cmd/server/main.go
