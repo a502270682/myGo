@@ -8,20 +8,20 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-// 实现接口 MyLoggerEntry
-type MyGoLogEntry struct {
+// 实现接口 LoggerEntry
+type LogEntry struct {
 	*logrus.Entry
 	nl *logrus.Logger
 	sl *logrus.Logger
 }
 
 // log 以及 entry的公用接口，方法一致，业务使用体验一致
-type MyLoggerEntry interface {
-	WithField(key string, value interface{}) MyLoggerEntry
-	WithFields(fields Fields) MyLoggerEntry
-	WithError(err error) MyLoggerEntry
-	WithTime(t time.Time) MyLoggerEntry
-	WithObject(obj interface{}) MyLoggerEntry
+type LoggerEntry interface {
+	WithField(key string, value interface{}) LoggerEntry
+	WithFields(fields Fields) LoggerEntry
+	WithError(err error) LoggerEntry
+	WithTime(t time.Time) LoggerEntry
+	WithObject(obj interface{}) LoggerEntry
 	Tracef(ctx context.Context, format string, args ...interface{})
 	Debugf(ctx context.Context, format string, args ...interface{})
 	Infof(ctx context.Context, format string, args ...interface{})
@@ -53,165 +53,165 @@ type MyLoggerEntry interface {
 	Panicln(ctx context.Context, args ...interface{})
 }
 
-func (en MyGoLogEntry) WithField(key string, value interface{}) MyLoggerEntry {
-	return &MyGoLogEntry{en.Entry.WithField(key, value), en.nl, en.sl}
+func (en LogEntry) WithField(key string, value interface{}) LoggerEntry {
+	return &LogEntry{en.Entry.WithField(key, value), en.nl, en.sl}
 }
 
-func (en MyGoLogEntry) WithFields(fields Fields) MyLoggerEntry {
-	return &MyGoLogEntry{en.Entry.WithFields(fields), en.nl, en.sl}
+func (en LogEntry) WithFields(fields Fields) LoggerEntry {
+	return &LogEntry{en.Entry.WithFields(fields), en.nl, en.sl}
 }
 
-func (en MyGoLogEntry) WithError(err error) MyLoggerEntry {
-	return &MyGoLogEntry{en.Entry.WithError(err), en.nl, en.sl}
+func (en LogEntry) WithError(err error) LoggerEntry {
+	return &LogEntry{en.Entry.WithError(err), en.nl, en.sl}
 }
 
-func (en MyGoLogEntry) WithTime(t time.Time) MyLoggerEntry {
-	return &MyGoLogEntry{en.Entry.WithTime(t), en.nl, en.sl}
+func (en LogEntry) WithTime(t time.Time) LoggerEntry {
+	return &LogEntry{en.Entry.WithTime(t), en.nl, en.sl}
 }
 
-func (en MyGoLogEntry) WithObject(obj interface{}) MyLoggerEntry {
+func (en LogEntry) WithObject(obj interface{}) LoggerEntry {
 	fields := parseFieldsFromObj(obj)
-	return &MyGoLogEntry{en.Entry.WithFields(fields), en.nl, en.sl}
+	return &LogEntry{en.Entry.WithFields(fields), en.nl, en.sl}
 }
 
-func (en MyGoLogEntry) Tracef(ctx context.Context, format string, args ...interface{}) {
+func (en LogEntry) Tracef(ctx context.Context, format string, args ...interface{}) {
 	en.Entry.WithContext(ctx).Logf(TraceLevel, format, args...)
 }
 
-func (en MyGoLogEntry) Debugf(ctx context.Context, format string, args ...interface{}) {
+func (en LogEntry) Debugf(ctx context.Context, format string, args ...interface{}) {
 	en.Entry.WithContext(ctx).Logf(DebugLevel, format, args...)
 }
 
-func (en MyGoLogEntry) Infof(ctx context.Context, format string, args ...interface{}) {
+func (en LogEntry) Infof(ctx context.Context, format string, args ...interface{}) {
 	en.Entry.WithContext(ctx).Logf(InfoLevel, format, args...)
 }
 
-func (en MyGoLogEntry) Printf(ctx context.Context, format string, args ...interface{}) {
+func (en LogEntry) Printf(ctx context.Context, format string, args ...interface{}) {
 
 	en.Entry.WithContext(ctx).Printf(format, args...)
 }
 
-func (en MyGoLogEntry) Warnf(ctx context.Context, format string, args ...interface{}) {
+func (en LogEntry) Warnf(ctx context.Context, format string, args ...interface{}) {
 
 	en.Entry.WithContext(ctx).Logf(WarnLevel, format, args...)
 }
 
-func (en MyGoLogEntry) Warningf(ctx context.Context, format string, args ...interface{}) {
+func (en LogEntry) Warningf(ctx context.Context, format string, args ...interface{}) {
 
 	en.Entry.WithContext(ctx).Warnf(format, args...)
 }
 
-func (en MyGoLogEntry) Errorf(ctx context.Context, format string, args ...interface{}) {
+func (en LogEntry) Errorf(ctx context.Context, format string, args ...interface{}) {
 
 	en.Entry.WithContext(ctx).Logf(ErrorLevel, format, args...)
 }
 
-func (en MyGoLogEntry) Fatalf(ctx context.Context, format string, args ...interface{}) {
+func (en LogEntry) Fatalf(ctx context.Context, format string, args ...interface{}) {
 
 	en.Entry.WithContext(ctx).Fatalf(format, args...)
 }
 
-func (en MyGoLogEntry) Panicf(ctx context.Context, format string, args ...interface{}) {
+func (en LogEntry) Panicf(ctx context.Context, format string, args ...interface{}) {
 
 	en.Entry.WithContext(ctx).Logf(PanicLevel, format, args...)
 }
 
-func (en MyGoLogEntry) Log(ctx context.Context, level Level, args ...interface{}) {
+func (en LogEntry) Log(ctx context.Context, level Level, args ...interface{}) {
 
 	en.Entry.WithContext(ctx).Log(level, args...)
 }
 
-func (en MyGoLogEntry) Trace(ctx context.Context, args ...interface{}) {
+func (en LogEntry) Trace(ctx context.Context, args ...interface{}) {
 
 	en.Entry.WithContext(ctx).Log(TraceLevel, args...)
 }
 
-func (en MyGoLogEntry) Debug(ctx context.Context, args ...interface{}) {
+func (en LogEntry) Debug(ctx context.Context, args ...interface{}) {
 
 	en.Entry.WithContext(ctx).Log(DebugLevel, args...)
 }
 
-func (en MyGoLogEntry) Info(ctx context.Context, args ...interface{}) {
+func (en LogEntry) Info(ctx context.Context, args ...interface{}) {
 
 	en.Entry.WithContext(ctx).Log(InfoLevel, args...)
 }
 
-func (en MyGoLogEntry) Print(ctx context.Context, args ...interface{}) {
+func (en LogEntry) Print(ctx context.Context, args ...interface{}) {
 
 	en.Entry.WithContext(ctx).Print(args...)
 }
 
-func (en MyGoLogEntry) Warn(ctx context.Context, args ...interface{}) {
+func (en LogEntry) Warn(ctx context.Context, args ...interface{}) {
 
 	en.Entry.WithContext(ctx).Log(WarnLevel, args...)
 }
 
-func (en MyGoLogEntry) Warning(ctx context.Context, args ...interface{}) {
+func (en LogEntry) Warning(ctx context.Context, args ...interface{}) {
 
 	en.Entry.WithContext(ctx).Warn(args...)
 }
 
-func (en MyGoLogEntry) Error(ctx context.Context, args ...interface{}) {
+func (en LogEntry) Error(ctx context.Context, args ...interface{}) {
 
 	en.Entry.WithContext(ctx).Log(ErrorLevel, args...)
 }
 
-func (en MyGoLogEntry) Fatal(ctx context.Context, args ...interface{}) {
+func (en LogEntry) Fatal(ctx context.Context, args ...interface{}) {
 
 	en.Entry.WithContext(ctx).Fatal(args...)
 }
 
-func (en MyGoLogEntry) Panic(ctx context.Context, args ...interface{}) {
+func (en LogEntry) Panic(ctx context.Context, args ...interface{}) {
 
 	en.Entry.WithContext(ctx).Panic(args...)
 }
 
-func (en MyGoLogEntry) Logln(ctx context.Context, level Level, args ...interface{}) {
+func (en LogEntry) Logln(ctx context.Context, level Level, args ...interface{}) {
 
 	en.Entry.WithContext(ctx).Logln(level, args...)
 }
 
-func (en MyGoLogEntry) Traceln(ctx context.Context, args ...interface{}) {
+func (en LogEntry) Traceln(ctx context.Context, args ...interface{}) {
 
 	en.Entry.WithContext(ctx).Logln(TraceLevel, args...)
 }
 
-func (en MyGoLogEntry) Debugln(ctx context.Context, args ...interface{}) {
+func (en LogEntry) Debugln(ctx context.Context, args ...interface{}) {
 
 	en.Entry.WithContext(ctx).Logln(DebugLevel, args...)
 }
 
-func (en MyGoLogEntry) Infoln(ctx context.Context, args ...interface{}) {
+func (en LogEntry) Infoln(ctx context.Context, args ...interface{}) {
 
 	en.Entry.WithContext(ctx).Logln(InfoLevel, args...)
 }
 
-func (en MyGoLogEntry) Println(ctx context.Context, args ...interface{}) {
+func (en LogEntry) Println(ctx context.Context, args ...interface{}) {
 
 	en.Entry.WithContext(ctx).Println(args...)
 }
 
-func (en MyGoLogEntry) Warnln(ctx context.Context, args ...interface{}) {
+func (en LogEntry) Warnln(ctx context.Context, args ...interface{}) {
 
 	en.Entry.WithContext(ctx).Logln(WarnLevel, args...)
 }
 
-func (en MyGoLogEntry) Warningln(ctx context.Context, args ...interface{}) {
+func (en LogEntry) Warningln(ctx context.Context, args ...interface{}) {
 
 	en.Entry.WithContext(ctx).Logln(WarnLevel, args...)
 }
 
-func (en MyGoLogEntry) Errorln(ctx context.Context, args ...interface{}) {
+func (en LogEntry) Errorln(ctx context.Context, args ...interface{}) {
 
 	en.Entry.WithContext(ctx).Logln(ErrorLevel, args...)
 }
 
-func (en MyGoLogEntry) Fatalln(ctx context.Context, args ...interface{}) {
+func (en LogEntry) Fatalln(ctx context.Context, args ...interface{}) {
 
 	en.Entry.WithContext(ctx).Fatalln(args...)
 }
 
-func (en MyGoLogEntry) Panicln(ctx context.Context, args ...interface{}) {
+func (en LogEntry) Panicln(ctx context.Context, args ...interface{}) {
 
 	en.Entry.WithContext(ctx).Logln(PanicLevel, args...)
 }
