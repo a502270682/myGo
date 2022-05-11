@@ -15,11 +15,11 @@ type MyLogger interface {
 	SetReportCaller(include bool)
 	SetLevel(level logrus.Level)
 	AddHook(hook logrus.Hook)
-	WithField(key string, value interface{}) MyLoggerEntry
-	WithFields(fields Fields) MyLoggerEntry
-	WithError(err error) MyLoggerEntry
-	WithTime(t time.Time) MyLoggerEntry
-	WithObject(obj interface{}) MyLoggerEntry
+	WithField(key string, value interface{}) LoggerEntry
+	WithFields(fields Fields) LoggerEntry
+	WithError(err error) LoggerEntry
+	WithTime(t time.Time) LoggerEntry
+	WithObject(obj interface{}) LoggerEntry
 	Tracef(ctx context.Context, format string, args ...interface{})
 	Debugf(ctx context.Context, format string, args ...interface{})
 	Infof(ctx context.Context, format string, args ...interface{})
@@ -56,8 +56,8 @@ type CtxLogger struct {
 	s *logrus.Logger // shadow log
 }
 
-func (cl *CtxLogger) newMyGoLogEntry() MyLoggerEntry {
-	return &MyGoLogEntry{logrus.NewEntry(cl.n), cl.n, cl.s}
+func (cl *CtxLogger) newMyGoLogEntry() LoggerEntry {
+	return &LogEntry{logrus.NewEntry(cl.n), cl.n, cl.s}
 }
 
 func (cl *CtxLogger) SetOutput(out io.Writer) {
@@ -80,26 +80,26 @@ func (cl *CtxLogger) AddHook(hook logrus.Hook) {
 	cl.n.AddHook(hook)
 }
 
-func (cl *CtxLogger) WithField(key string, value interface{}) MyLoggerEntry {
+func (cl *CtxLogger) WithField(key string, value interface{}) LoggerEntry {
 	// 借用logrus.Logger本身Entry的管理机制来创建Entry,下同
-	return &MyGoLogEntry{cl.n.WithField(key, value), cl.n, cl.s}
+	return &LogEntry{cl.n.WithField(key, value), cl.n, cl.s}
 }
 
-func (cl *CtxLogger) WithFields(fields Fields) MyLoggerEntry {
-	return &MyGoLogEntry{cl.n.WithFields(fields), cl.n, cl.s}
+func (cl *CtxLogger) WithFields(fields Fields) LoggerEntry {
+	return &LogEntry{cl.n.WithFields(fields), cl.n, cl.s}
 }
 
-func (cl *CtxLogger) WithError(err error) MyLoggerEntry {
-	return &MyGoLogEntry{cl.n.WithError(err), cl.n, cl.s}
+func (cl *CtxLogger) WithError(err error) LoggerEntry {
+	return &LogEntry{cl.n.WithError(err), cl.n, cl.s}
 }
 
-func (cl *CtxLogger) WithTime(t time.Time) MyLoggerEntry {
-	return &MyGoLogEntry{cl.n.WithTime(t), cl.n, cl.s}
+func (cl *CtxLogger) WithTime(t time.Time) LoggerEntry {
+	return &LogEntry{cl.n.WithTime(t), cl.n, cl.s}
 }
 
-func (cl *CtxLogger) WithObject(obj interface{}) MyLoggerEntry {
+func (cl *CtxLogger) WithObject(obj interface{}) LoggerEntry {
 	fields := parseFieldsFromObj(obj)
-	return &MyGoLogEntry{cl.n.WithFields(fields), cl.n, cl.s}
+	return &LogEntry{cl.n.WithFields(fields), cl.n, cl.s}
 }
 
 func (cl *CtxLogger) Tracef(ctx context.Context, format string, args ...interface{}) {

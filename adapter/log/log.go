@@ -28,9 +28,9 @@ const InfoLevel = logrus.InfoLevel
 const DebugLevel = logrus.DebugLevel
 const TraceLevel = logrus.TraceLevel
 
-var logger = myLogger()
+var logger = setLogger()
 
-func myLogger() Logger {
+func setLogger() Logger {
 	formatter := &logrus.JSONFormatter{}
 	nl := logrus.Logger{
 		Out:          os.Stderr,
@@ -87,19 +87,19 @@ func NewLogrusEntry(l *logrus.Logger) *Entry {
 	return logrus.NewEntry(l)
 }
 
-func WithField(key string, value interface{}) MyLoggerEntry {
+func WithField(key string, value interface{}) LoggerEntry {
 	return logger.WithField(key, value)
 }
 
-func WithFields(fields Fields) MyLoggerEntry {
+func WithFields(fields Fields) LoggerEntry {
 	return logger.WithFields(fields)
 }
 
-func WithTime(t time.Time) MyLoggerEntry {
+func WithTime(t time.Time) LoggerEntry {
 	return logger.WithTime(t)
 }
 
-func WithObject(obj interface{}) MyLoggerEntry {
+func WithObject(obj interface{}) LoggerEntry {
 	return logger.WithObject(obj)
 }
 
