@@ -20,7 +20,7 @@ http_port = ":8081"
 [redis]
     [redis.default]
     name = "default"
-    addr = "redis.staging.svc.cluster.local:6379" #staging-staging-shared-001.sownv4.0001.apse1.cache.amazonaws.com
+    addr = "127.0.0.1:6379" #staging-staging-shared-001.sownv4.0001.apse1.cache.amazonaws.com
     db = 0
     maxRetries = 3
     dialTimeout = 5

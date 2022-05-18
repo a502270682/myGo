@@ -3,7 +3,7 @@ package models
 import (
 	"fmt"
 
-	"github.com/jinzhu/gorm"
+	"gorm.io/gorm"
 )
 
 const TableUser = "user"
