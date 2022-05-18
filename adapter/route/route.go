@@ -5,12 +5,10 @@ import (
 	"myGo/adapter/error_code"
 	"myGo/adapter/log"
 	"net/http"
-	"net/url"
 	"reflect"
 
 	"github.com/fatih/structs"
 	"github.com/gin-gonic/gin"
-	"github.com/gin-gonic/gin/binding"
 	"github.com/globalsign/mgo/bson"
 	"github.com/pkg/errors"
 )
@@ -150,6 +148,52 @@ func CreateHandlerFuncWithLogger(method interface{}, l log.Logger) gin.HandlerFu
 	return func(c *gin.Context) {
 		ctx := c.Request.Context()
 		req := reflect.New(reqT)
+		if err := c.ShouldBind(req.Interface()); err != nil {
+			replyError := error_code.Error(error_code.CodeParamWrong, err.Error())
+			c.JSON(http.StatusOK, replyError)
+			l.WithFields(log.Fields{
+				"req": c.Request.URL,
+				"err": err,
+			}).Warn(ctx, "bind param failed")
+			return
+		}
+
+		reply := reflect.New(replyT)
+		l.WithFields(log.Fields{
+			"func": mV.Type().String(),
+			"req":  req,
+		}).Debugf(ctx, "invoke handler")
+		results := mV.Call([]reflect.Value{reflect.ValueOf(ctx), req, reply})
+		err, _ := results[0].Interface().(*error_code.ReplyError)
+		if err != nil {
+			l.WithFields(log.Fields{
+				"req": c.Request.URL,
+				"err": err,
+			}).Warn(ctx, "handler err")
+			c.JSON(0, err)
+			return
+		}
+		m := structToMap(reply.Interface())
+		if _, ok := m["code"]; !ok {
+			m["code"] = 0
+		}
+		if _, ok := m["message"]; !ok {
+			m["message"] = ""
+		}
+		c.PureJSON(http.StatusOK, m)
+	}
+}
+
+/*
+func CreateHandlerFuncWithLogger(method interface{}, l log.Logger) gin.HandlerFunc {
+	mV, reqT, replyT, err := checkMethod(method)
+	if err != nil {
+		panic(err)
+	}
+
+	return func(c *gin.Context) {
+		ctx := c.Request.Context()
+		req := reflect.New(reqT)
 		_ = c.Request.ParseForm()
 		_ = c.Request.ParseMultipartForm(defaultMemory)
 
@@ -218,3 +262,4 @@ func CreateHandlerFuncWithLogger(method interface{}, l log.Logger) gin.HandlerFu
 		c.PureJSON(http.StatusOK, m)
 	}
 }
+*/

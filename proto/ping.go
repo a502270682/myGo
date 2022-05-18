@@ -6,6 +6,7 @@ type CommonRsp struct {
 }
 
 type PingReq struct {
+	Test string `json:"test" form:"test"`
 }
 
 type PingRsp struct {

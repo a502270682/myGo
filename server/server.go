@@ -25,11 +25,10 @@ func initWithConfig(ctx context.Context, filePath string) (*config.Config, error
 }
 
 func initMysql(conf *config.Config) error {
-	err := mysql.InitializeMainDb(conf.Mysql.Master)
+	db, err := mysql.InitializeMainDb(conf.Mysql.Master)
 	if err != nil {
 		return err
 	}
-	db := mysql.GetClient()
 	mysql.InitEntityDao(db)
 	return nil
 }

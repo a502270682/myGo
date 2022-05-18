@@ -4,7 +4,7 @@ import (
 	"context"
 	"myGo/adapter/log"
 
-	"github.com/jinzhu/gorm"
+	"gorm.io/gorm"
 )
 
 var injectors []func(db *gorm.DB)
