@@ -5,7 +5,7 @@ go 1.13
 require (
 	github.com/cpuguy83/go-md2man/v2 v2.0.0 // indirect
 	github.com/fatih/structs v1.1.0
-	github.com/gin-gonic/gin v1.6.3
+	github.com/gin-gonic/gin v1.7.0
 	github.com/globalsign/mgo v0.0.0-20181015135952-eeefdecb41b8
 	github.com/go-redis/redis/v8 v8.11.3
 	github.com/gocarina/gocsv v0.0.0-20210516172204-ca9e8a8ddea8
