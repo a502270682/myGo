@@ -12,7 +12,6 @@ import (
 type LogEntry struct {
 	*logrus.Entry
 	nl *logrus.Logger
-	sl *logrus.Logger
 }
 
 // log 以及 entry的公用接口，方法一致，业务使用体验一致
@@ -54,24 +53,24 @@ type LoggerEntry interface {
 }
 
 func (en LogEntry) WithField(key string, value interface{}) LoggerEntry {
-	return &LogEntry{en.Entry.WithField(key, value), en.nl, en.sl}
+	return &LogEntry{en.Entry.WithField(key, value), en.nl}
 }
 
 func (en LogEntry) WithFields(fields Fields) LoggerEntry {
-	return &LogEntry{en.Entry.WithFields(fields), en.nl, en.sl}
+	return &LogEntry{en.Entry.WithFields(fields), en.nl}
 }
 
 func (en LogEntry) WithError(err error) LoggerEntry {
-	return &LogEntry{en.Entry.WithError(err), en.nl, en.sl}
+	return &LogEntry{en.Entry.WithError(err), en.nl}
 }
 
 func (en LogEntry) WithTime(t time.Time) LoggerEntry {
-	return &LogEntry{en.Entry.WithTime(t), en.nl, en.sl}
+	return &LogEntry{en.Entry.WithTime(t), en.nl}
 }
 
 func (en LogEntry) WithObject(obj interface{}) LoggerEntry {
 	fields := parseFieldsFromObj(obj)
-	return &LogEntry{en.Entry.WithFields(fields), en.nl, en.sl}
+	return &LogEntry{en.Entry.WithFields(fields), en.nl}
 }
 
 func (en LogEntry) Tracef(ctx context.Context, format string, args ...interface{}) {

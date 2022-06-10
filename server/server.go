@@ -2,6 +2,7 @@ package server
 
 import (
 	"context"
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/pkg/errors"
 	"github.com/urfave/cli"
@@ -16,12 +17,16 @@ type Server struct {
 	config *config.Config
 }
 
-func initWithConfig(ctx context.Context, filePath string) (*config.Config, error) {
+func initWithConfig(filePath string) (*config.Config, error) {
 	conf, err := config.Load(filePath)
 	if err != nil {
 		return nil, err
 	}
 	return conf, nil
+}
+
+func initLog(conf *config.Config) error {
+	return log.NewLoggerWithOptions(conf.Log)
 }
 
 func initMysql(conf *config.Config) error {
@@ -43,13 +48,19 @@ func NewServer(ctx context.Context) *Server {
 			return errors.New("usage: my_go -c configfilepath")
 		}
 
-		log.Info(ctx, "start read config: ", c.GlobalString("c"))
-		conf, err := initWithConfig(ctx, c.GlobalString("c"))
+		fmt.Println("start read config: ", c.GlobalString("c"))
+		conf, err := initWithConfig(c.GlobalString("c"))
 		if err != nil {
 			return errors.Wrap(err, "fail to init conf")
 		}
-		log.Infof(ctx, "init config success. conf:%+v", conf)
+		fmt.Println("init config success. conf:", conf)
 		s.config = conf
+
+		// log
+		err = initLog(conf)
+		if err != nil {
+			return errors.Wrap(err, "fail to init log")
+		}
 
 		// mysql
 		err = initMysql(conf)

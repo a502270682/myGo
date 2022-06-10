@@ -53,11 +53,10 @@ type MyLogger interface {
 
 type CtxLogger struct {
 	n *logrus.Logger // normal log
-	s *logrus.Logger // shadow log
 }
 
 func (cl *CtxLogger) newLogEntry() LoggerEntry {
-	return &LogEntry{logrus.NewEntry(cl.n), cl.n, cl.s}
+	return &LogEntry{logrus.NewEntry(cl.n), cl.n}
 }
 
 func (cl *CtxLogger) SetOutput(out io.Writer) {
@@ -82,24 +81,24 @@ func (cl *CtxLogger) AddHook(hook logrus.Hook) {
 
 func (cl *CtxLogger) WithField(key string, value interface{}) LoggerEntry {
 	// 借用logrus.Logger本身Entry的管理机制来创建Entry,下同
-	return &LogEntry{cl.n.WithField(key, value), cl.n, cl.s}
+	return &LogEntry{cl.n.WithField(key, value), cl.n}
 }
 
 func (cl *CtxLogger) WithFields(fields Fields) LoggerEntry {
-	return &LogEntry{cl.n.WithFields(fields), cl.n, cl.s}
+	return &LogEntry{cl.n.WithFields(fields), cl.n}
 }
 
 func (cl *CtxLogger) WithError(err error) LoggerEntry {
-	return &LogEntry{cl.n.WithError(err), cl.n, cl.s}
+	return &LogEntry{cl.n.WithError(err), cl.n}
 }
 
 func (cl *CtxLogger) WithTime(t time.Time) LoggerEntry {
-	return &LogEntry{cl.n.WithTime(t), cl.n, cl.s}
+	return &LogEntry{cl.n.WithTime(t), cl.n}
 }
 
 func (cl *CtxLogger) WithObject(obj interface{}) LoggerEntry {
 	fields := parseFieldsFromObj(obj)
-	return &LogEntry{cl.n.WithFields(fields), cl.n, cl.s}
+	return &LogEntry{cl.n.WithFields(fields), cl.n}
 }
 
 func (cl *CtxLogger) Tracef(ctx context.Context, format string, args ...interface{}) {
