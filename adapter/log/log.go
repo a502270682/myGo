@@ -2,6 +2,7 @@ package log
 
 import (
 	"context"
+	"github.com/pkg/errors"
 	"io"
 	"os"
 	"time"
@@ -40,15 +41,50 @@ func setLogger() Logger {
 		ExitFunc:     os.Exit,
 		ReportCaller: false,
 	}
-	sl := logrus.Logger{
-		Out:          os.Stderr,
-		Formatter:    formatter,
-		Hooks:        make(LevelHooks),
-		Level:        InfoLevel,
-		ExitFunc:     os.Exit,
-		ReportCaller: false,
+	return &CtxLogger{&nl}
+}
+
+type Options struct {
+	Level     string `mapstructure:"level" json:"level" toml:"level"`
+	File      string `mapstructure:"file" json:"file" toml:"file"`
+	ErrFile   string `mapstructure:"err_file" json:"err_file" toml:"err_file"`
+	CrashFile string `mapstructure:"crash_file" json:"crash_file" toml:"crash_file"`
+	AppName   string `mapstructure:"app_name" json:"app_name" toml:"app_name"`
+	Format    string `mapstructure:"format" json:"format" toml:"format"`
+}
+
+func NewLoggerWithOptions(options Options) (err error) {
+	if err = initLoggerWithOptions(logger, options); err != nil {
+		return errors.Wrap(err, "failed to initialize logger")
 	}
-	return &CtxLogger{&nl, &sl}
+	return nil
+}
+
+func initLoggerWithOptions(l Logger, options Options) (err error) {
+	if options.Level != "" { // 如果配置里指定了日志等级，则解析并设置，否则默认等级是info。
+		level, err := ParseLevel(options.Level)
+		if err != nil {
+			return errors.Wrapf(err, "failed to parse level(%s)", options.Level)
+		}
+		l.SetLevel(level)
+	}
+	if options.File != "" { // 如果配置里指定了日志文件，则解析并设置，否则默认写到stderr。
+		err = handleFileOutput(l, options.File) // 设置output、压测标志
+		if err != nil {
+			return errors.Wrapf(err, "failed to set logger.Output and set flow_control")
+		}
+	}
+
+	return
+}
+
+func handleFileOutput(l Logger, fileName string) error {
+	writer, err := os.OpenFile(fileName, os.O_WRONLY|os.O_APPEND|os.O_CREATE, 0666)
+	if err != nil {
+		return errors.Wrapf(err, "failed to open file(%s)", fileName)
+	}
+	l.SetOutput(writer) // 设置正常日志
+	return nil
 }
 
 func GetLogger() Logger {

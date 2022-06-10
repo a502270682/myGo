@@ -3,6 +3,7 @@ package config
 import (
 	"github.com/pkg/errors"
 	"github.com/spf13/viper"
+	"myGo/adapter/log"
 	"myGo/adapter/redis"
 )
 
@@ -12,6 +13,7 @@ type Config struct {
 	HTTPPort string      `mapstructure:"http_port"`
 	Mysql    Mysql       `mapstructure:"mysql"`
 	Redis    RedisConfig `mapstructure:"redis"`
+	Log      log.Options `mapstructure:"logger"`
 }
 
 // RedisConfig is the config for redis
