@@ -55,7 +55,7 @@ type CtxLogger struct {
 	n *logrus.Logger // normal log
 }
 
-func (cl *CtxLogger) newMyGoLogEntry() LoggerEntry {
+func (cl *CtxLogger) newLogEntry() LoggerEntry {
 	return &LogEntry{logrus.NewEntry(cl.n), cl.n}
 }
 
@@ -102,117 +102,117 @@ func (cl *CtxLogger) WithObject(obj interface{}) LoggerEntry {
 }
 
 func (cl *CtxLogger) Tracef(ctx context.Context, format string, args ...interface{}) {
-	cl.newMyGoLogEntry().Tracef(ctx, format, args...)
+	cl.newLogEntry().Tracef(ctx, format, args...)
 }
 
 func (cl *CtxLogger) Debugf(ctx context.Context, format string, args ...interface{}) {
-	cl.newMyGoLogEntry().Debugf(ctx, format, args...)
+	cl.newLogEntry().Debugf(ctx, format, args...)
 }
 
 func (cl *CtxLogger) Infof(ctx context.Context, format string, args ...interface{}) {
-	cl.newMyGoLogEntry().Infof(ctx, format, args...)
+	cl.newLogEntry().Infof(ctx, format, args...)
 }
 
 func (cl *CtxLogger) Printf(ctx context.Context, format string, args ...interface{}) {
-	cl.newMyGoLogEntry().Printf(ctx, format, args...)
+	cl.newLogEntry().Printf(ctx, format, args...)
 }
 
 func (cl *CtxLogger) Warnf(ctx context.Context, format string, args ...interface{}) {
-	cl.newMyGoLogEntry().Warnf(ctx, format, args...)
+	cl.newLogEntry().Warnf(ctx, format, args...)
 }
 
 func (cl *CtxLogger) Warningf(ctx context.Context, format string, args ...interface{}) {
-	cl.newMyGoLogEntry().Warningf(ctx, format, args...)
+	cl.newLogEntry().Warningf(ctx, format, args...)
 }
 
 func (cl *CtxLogger) Errorf(ctx context.Context, format string, args ...interface{}) {
-	cl.newMyGoLogEntry().Errorf(ctx, format, args...)
+	cl.newLogEntry().Errorf(ctx, format, args...)
 }
 
 func (cl *CtxLogger) Fatalf(ctx context.Context, format string, args ...interface{}) {
-	cl.newMyGoLogEntry().Fatalf(ctx, format, args...)
+	cl.newLogEntry().Fatalf(ctx, format, args...)
 }
 
 func (cl *CtxLogger) Panicf(ctx context.Context, format string, args ...interface{}) {
-	cl.newMyGoLogEntry().Panicf(ctx, format, args...)
+	cl.newLogEntry().Panicf(ctx, format, args...)
 }
 
 func (cl *CtxLogger) Log(ctx context.Context, level Level, args ...interface{}) {
-	cl.newMyGoLogEntry().Log(ctx, level, args...)
+	cl.newLogEntry().Log(ctx, level, args...)
 }
 
 func (cl *CtxLogger) Trace(ctx context.Context, args ...interface{}) {
-	cl.newMyGoLogEntry().Trace(ctx, args...)
+	cl.newLogEntry().Trace(ctx, args...)
 }
 
 func (cl *CtxLogger) Debug(ctx context.Context, args ...interface{}) {
-	cl.newMyGoLogEntry().Debug(ctx, args...)
+	cl.newLogEntry().Debug(ctx, args...)
 }
 
 func (cl *CtxLogger) Info(ctx context.Context, args ...interface{}) {
-	cl.newMyGoLogEntry().Info(ctx, args...)
+	cl.newLogEntry().Info(ctx, args...)
 }
 
 func (cl *CtxLogger) Print(ctx context.Context, args ...interface{}) {
-	cl.newMyGoLogEntry().Print(ctx, args...)
+	cl.newLogEntry().Print(ctx, args...)
 }
 
 func (cl *CtxLogger) Warn(ctx context.Context, args ...interface{}) {
-	cl.newMyGoLogEntry().Warn(ctx, args...)
+	cl.newLogEntry().Warn(ctx, args...)
 }
 
 func (cl *CtxLogger) Warning(ctx context.Context, args ...interface{}) {
-	cl.newMyGoLogEntry().Warning(ctx, args...)
+	cl.newLogEntry().Warning(ctx, args...)
 }
 
 func (cl *CtxLogger) Error(ctx context.Context, args ...interface{}) {
-	cl.newMyGoLogEntry().Error(ctx, args...)
+	cl.newLogEntry().Error(ctx, args...)
 }
 
 func (cl *CtxLogger) Fatal(ctx context.Context, args ...interface{}) {
-	cl.newMyGoLogEntry().Fatal(ctx, args...)
+	cl.newLogEntry().Fatal(ctx, args...)
 }
 
 func (cl *CtxLogger) Panic(ctx context.Context, args ...interface{}) {
-	cl.newMyGoLogEntry().Panic(ctx, args...)
+	cl.newLogEntry().Panic(ctx, args...)
 }
 
 func (cl *CtxLogger) Logln(ctx context.Context, level Level, args ...interface{}) {
-	cl.newMyGoLogEntry().Logln(ctx, level, args...)
+	cl.newLogEntry().Logln(ctx, level, args...)
 }
 
 func (cl *CtxLogger) Traceln(ctx context.Context, args ...interface{}) {
-	cl.newMyGoLogEntry().Traceln(ctx, args...)
+	cl.newLogEntry().Traceln(ctx, args...)
 }
 
 func (cl *CtxLogger) Debugln(ctx context.Context, args ...interface{}) {
-	cl.newMyGoLogEntry().Debugln(ctx, args...)
+	cl.newLogEntry().Debugln(ctx, args...)
 }
 
 func (cl *CtxLogger) Infoln(ctx context.Context, args ...interface{}) {
-	cl.newMyGoLogEntry().Infoln(ctx, args...)
+	cl.newLogEntry().Infoln(ctx, args...)
 }
 
 func (cl *CtxLogger) Println(ctx context.Context, args ...interface{}) {
-	cl.newMyGoLogEntry().Println(ctx, args...)
+	cl.newLogEntry().Println(ctx, args...)
 }
 
 func (cl *CtxLogger) Warnln(ctx context.Context, args ...interface{}) {
-	cl.newMyGoLogEntry().Warnln(ctx, args...)
+	cl.newLogEntry().Warnln(ctx, args...)
 }
 
 func (cl *CtxLogger) Warningln(ctx context.Context, args ...interface{}) {
-	cl.newMyGoLogEntry().Warningln(ctx, args...)
+	cl.newLogEntry().Warningln(ctx, args...)
 }
 
 func (cl *CtxLogger) Errorln(ctx context.Context, args ...interface{}) {
-	cl.newMyGoLogEntry().Errorln(ctx, args...)
+	cl.newLogEntry().Errorln(ctx, args...)
 }
 
 func (cl *CtxLogger) Fatalln(ctx context.Context, args ...interface{}) {
-	cl.newMyGoLogEntry().Fatalln(ctx, args...)
+	cl.newLogEntry().Fatalln(ctx, args...)
 }
 
 func (cl *CtxLogger) Panicln(ctx context.Context, args ...interface{}) {
-	cl.newMyGoLogEntry().Panicln(ctx, args...)
+	cl.newLogEntry().Panicln(ctx, args...)
 }
