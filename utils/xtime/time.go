@@ -1,4 +1,4 @@
-package utils
+package xtime
 
 /*
 	t, _ := time.ParseInLocation("2006-01-02 15:04:05", "2016-06-13 15:34:39", time.Local)

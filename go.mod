@@ -19,7 +19,7 @@ require (
 	github.com/spf13/viper v1.7.1
 	github.com/stretchr/testify v1.7.0 // indirect
 	github.com/urfave/cli v1.22.5
-	golang.org/x/sys v0.0.0-20210510120138-977fb7262007 // indirect
+	github.com/xuri/excelize/v2 v2.6.0 // indirect
 	gopkg.in/check.v1 v1.0.0-20200227125254-8fa46927fb4f // indirect
 	gorm.io/driver/mysql v1.3.3
 	gorm.io/gorm v1.23.1
